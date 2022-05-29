@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="InventoryTest.testNewInventory" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+    <CommandLine>
+      <PhpTestInterpreterSettings>
+        <option name="interpreterName" value="PHP 8.1.6" />
+      </PhpTestInterpreterSettings>
+    </CommandLine>
+    <TestRunner class="hdvianna\InventoryTrack\Tests\Entities\InventoryTest" file="$PROJECT_DIR$/tests/Entities/InventoryTest.php" method="testNewInventory" scope="Method" />
+    <method v="2" />
+  </configuration>
+</component>
