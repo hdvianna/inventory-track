@@ -89,7 +89,7 @@ class ManageInventoryTest extends TestCase
         $stub->method("getSerialNumber")
             ->willReturn($inventory->serialNumber);
         $stub->method("getValue")
-            ->willReturn($inventory->value);
+            ->willReturn(strval($inventory->value));
         return $stub;
     }
 
