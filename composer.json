@@ -1,6 +1,8 @@
 {
     "name": "hdvianna/inventory-track",
     "type": "project",
+    "license": "MIT",
+    "version": "1.0.1",
     "authors": [
         {
             "name": "Henrique Damasceno Vianna",
