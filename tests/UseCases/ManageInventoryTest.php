@@ -8,8 +8,8 @@ use hdvianna\InventoryTrack\Adapters\InventoryAdapter;
 use hdvianna\InventoryTrack\Entities\Inventory;
 use hdvianna\InventoryTrack\Repositories\InventoryRepository;
 use hdvianna\InventoryTrack\UseCases\ManageInventory;
-use hdvianna\InventoryTrack\UseCases\Result;
-use hdvianna\InventoryTrack\UseCases\ResultStatus;
+use hdvianna\InventoryTrack\UseCases\Results\ManageInventoryResult;
+use hdvianna\InventoryTrack\UseCases\Results\Statuses\ManageInventoryResultStatus;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
@@ -21,7 +21,7 @@ class ManageInventoryTest extends TestCase
 
     /**
      * @covers hdvianna\InventoryTrack\UseCases\ManageInventory
-     * @covers hdvianna\InventoryTrack\UseCases\Result
+     * @covers hdvianna\InventoryTrack\UseCases\Results\ManageInventoryResult
      * @covers hdvianna\InventoryTrack\Entities\Inventory
      * @dataProvider givenTestState
      * @param $givenAdapter
@@ -29,7 +29,7 @@ class ManageInventoryTest extends TestCase
      * @param $expectedResult
      * @return void
      */
-    public function testCreateInventory(InventoryAdapter $givenAdapter, InventoryRepository $givenRepository, Result $expectedResult): void
+    public function testCreateInventory(InventoryAdapter $givenAdapter, InventoryRepository $givenRepository, ManageInventoryResult $expectedResult): void
     {
         $actualResult = $this->whenCreatingInventory($givenAdapter, $givenRepository);
         $this->thenResultInCreationSuccess($expectedResult, $actualResult);
@@ -46,11 +46,11 @@ class ManageInventoryTest extends TestCase
             [
                 $this->makeInventoryAdapterDouble($newInventories[0]),
                 $this->makeInventoryRepositoryDouble(null, $newInventories[0], $serialNumbers[0], 1),
-                new Result(true, ResultStatus::CreationSuccess, $newInventories[0])
+                new ManageInventoryResult(true, ManageInventoryResultStatus::CreationSuccess, $newInventories[0])
             ], [
                 $this->makeInventoryAdapterDouble($newInventories[1]),
                 $this->makeInventoryRepositoryDouble($oldInventories[1], $newInventories[1], $serialNumbers[1], 0),
-                new Result(false, ResultStatus::CreationFailedInventoryAlreadyExists, null)
+                new ManageInventoryResult(false, ManageInventoryResultStatus::CreationFailedInventoryAlreadyExists, null)
             ]
         ];
     }
@@ -106,13 +106,13 @@ class ManageInventoryTest extends TestCase
         return $mock;
     }
 
-    private function whenCreatingInventory(InventoryAdapter $adapter, InventoryRepository $repository): Result
+    private function whenCreatingInventory(InventoryAdapter $adapter, InventoryRepository $repository): ManageInventoryResult
     {
         $manageInventory = new ManageInventory($repository);
         return $manageInventory->create($adapter);
     }
 
-    private function thenResultInCreationSuccess(Result $expectedResult, Result $actualResult): void
+    private function thenResultInCreationSuccess(ManageInventoryResult $expectedResult, ManageInventoryResult $actualResult): void
     {
         $this->assertEquals($expectedResult, $actualResult);
     }
